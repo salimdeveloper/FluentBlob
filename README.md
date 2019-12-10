@@ -1,2 +1,2 @@
 # FluentBlob
-A Fluent API For Azure BLOB
+> A FlUENT API FOR AZURE BLOB SERVICES
