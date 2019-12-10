@@ -13,6 +13,7 @@ namespace FluentBlob.Core
     public interface IContainerActions
     {
         IFileReadActions Download(string fileName);
+        IFileWriteActions Upload(string fileName);
         string GetSharedUrl(string fileName, int sharedAccessMinutes);
         void Delete(string fileName);
         IEnumerable<IListBlobItem> GetAllFiles();
