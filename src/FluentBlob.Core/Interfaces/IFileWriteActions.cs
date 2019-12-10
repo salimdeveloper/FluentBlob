@@ -1,4 +1,6 @@
-﻿namespace FluentBlob.Core
+﻿using System.IO;
+
+namespace FluentBlob.Core
 {
     /// <author>
     /// SALIM ALAM
@@ -8,5 +10,6 @@
     public interface IFileWriteActions
     {
         void ToFile(string filePath);
+        void ToStream(Stream stream);
     }
 }
