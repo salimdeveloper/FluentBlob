@@ -11,7 +11,7 @@ namespace FluentBlob.Core
     /// </author>
     public interface IBlobActions
     {
-        IContainerActions GetContainer(string containerName);
-        IContainerActions SetContainer(string containerName);
+        IContainerActions Container(string containerName);
+       // IContainerActions SetContainer(string containerName);
     }
 }
