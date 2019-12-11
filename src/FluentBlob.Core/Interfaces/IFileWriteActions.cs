@@ -9,7 +9,7 @@ namespace FluentBlob.Core
     /// </author>
     public interface IFileWriteActions
     {
-        void FromFile(string filePath);
+        //void FromFile(string filePath);
         void FromStream(Stream stream);
     }
 }
