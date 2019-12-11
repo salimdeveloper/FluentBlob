@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage;
 
 namespace FluentBlob.Core
 {
@@ -28,7 +28,11 @@ namespace FluentBlob.Core
         }
         public void Delete(string fileName)
         {
-            throw new NotImplementedException();
+            CloudBlobContainer container = GetBlobContainer();
+            CloudBlob _blob = container.GetBlobReference(fileName);
+            CloudBlockBlob blob = container.GetBlockBlobReference(fileName);
+            var s = _blob.FetchAttributesAsync();
+            blob.DeleteIfExistsAsync();
         }
         public IFileWriteActions Upload(string fileName)
         {
@@ -46,16 +50,22 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer _blobContainer = GetBlobContainer();
             BlobContinuationToken _continuationToken = null;
-            do
+            
             {
-                var _response = _blobContainer.ListBlobsSegmentedAsync(string.Empty,true,BlobListingDetails.All,new int?()
-                    ,_continuationToken,null,null);
-                foreach (var blob in _response.Result.Results)
+                do
                 {
-                    yield return blob;
-                }
-            } while (_continuationToken!=null);
+                    var _response =  _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
+                        , _continuationToken, null, null);
+                    foreach (var blob in _response.Result.Results)
+                    {
+                        yield return blob;
+                    }
+                } while (_continuationToken != null);
+            };
+            
         }
+
+
         /// <summary>
         /// Gets blob uri with shared access token.
         /// </summary>
