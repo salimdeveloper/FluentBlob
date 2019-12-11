@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage;
+using System.IO;
 
 namespace FluentBlob.Core
 {
@@ -10,10 +11,11 @@ namespace FluentBlob.Core
     /// DATE: 12/10/2019
     /// https://github.com/salimdeveloper
     /// </author>
-    public sealed class BlobService:IBlobActions,IContainerActions
+    public sealed class BlobService:IBlobActions,IContainerActions, IFileReadActions, IFileWriteActions
     {
         private readonly string _connectionString;
         private string _containerName;
+        private string _fileName;
 
         public BlobService(string connectionString) => 
             this._connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
@@ -28,15 +30,37 @@ namespace FluentBlob.Core
         }
         public void Delete(string fileName)
         {
+            this._fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
             CloudBlobContainer container = GetBlobContainer();
-            CloudBlob _blob = container.GetBlobReference(fileName);
+            CloudBlob _blob = container.GetBlobReference(_fileName);
             _blob.DeleteIfExistsAsync();
         }
         public IFileWriteActions Upload(string fileName)
         {
-            throw new NotImplementedException();
+            this._fileName = fileName;
+            return this;
         }
         public IFileReadActions Download(string fileName)
+        {
+            this._fileName = fileName;
+            return this;
+        }
+        public void FromFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FromStream(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToStream(Stream stream)
         {
             throw new NotImplementedException();
         }
@@ -105,6 +129,8 @@ namespace FluentBlob.Core
             var container = _serviceClient.GetContainerReference(this._containerName);
             return container;
         }
+
+       
         #endregion
 
     }
