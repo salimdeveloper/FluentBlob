@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Storage.Blob;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 namespace FluentBlob.Core
 {
@@ -14,7 +14,7 @@ namespace FluentBlob.Core
         IFileReadActions Download(string fileName);
         IFileWriteActions Upload(string fileName);
         string GetSharedUri(string fileName, int sharedAccessMinutes);
-        void Delete(string fileName);
+        Task Delete(string fileName);
         IEnumerable<IListBlobItem> GetAllFiles();
     }
 }
