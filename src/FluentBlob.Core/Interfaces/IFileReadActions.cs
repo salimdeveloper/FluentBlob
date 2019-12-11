@@ -9,7 +9,7 @@ namespace FluentBlob.Core
     /// </author>
     public interface IFileReadActions
     {
-        void ToFile(string filePath);
+        //void ToFile(string filePath);
         void ToStream(Stream stream);
     }
 }
