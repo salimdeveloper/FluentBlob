@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace FluentBlob.Core
 {
@@ -11,13 +12,13 @@ namespace FluentBlob.Core
     /// DATE: 12/10/2019
     /// https://github.com/salimdeveloper
     /// </author>
-    public sealed class BlobService:IBlobActions,IContainerActions, IFileReadActions, IFileWriteActions
+    public sealed class BlobService : IBlobActions, IContainerActions, IFileReadActions, IFileWriteActions
     {
         private readonly string _connectionString;
         private string _containerName;
         private string _fileName;
 
-        public BlobService(string connectionString) => 
+        public BlobService(string connectionString) =>
             this._connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
 
         public static IBlobActions Connect(string connectionString) =>
@@ -28,12 +29,12 @@ namespace FluentBlob.Core
                                   throw new ArgumentNullException(nameof(containerName));
             return this;
         }
-        public void Delete(string fileName)
+        public async Task Delete(string fileName)
         {
             this._fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
             CloudBlobContainer container = GetBlobContainer();
             CloudBlob _blob = container.GetBlobReference(_fileName);
-            _blob.DeleteIfExistsAsync();
+            await _blob.DeleteIfExistsAsync();
         }
         public IFileWriteActions Upload(string fileName)
         {
@@ -52,7 +53,9 @@ namespace FluentBlob.Core
 
         public void FromStream(Stream stream)
         {
-            throw new NotImplementedException();
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
+            blockBlob.UploadFromStream(stream);
         }
 
         public void ToFile(string filePath)
@@ -62,7 +65,9 @@ namespace FluentBlob.Core
 
         public void ToStream(Stream stream)
         {
-            throw new NotImplementedException();
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
+            blockBlob.DownloadToStream(stream);
         }
         /// <summary>
         /// Gets all blob items in a container
@@ -72,11 +77,11 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer _blobContainer = GetBlobContainer();
             BlobContinuationToken _continuationToken = null;
-            
+
             {
                 do
                 {
-                    var _response =  _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
+                    var _response = _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
                         , _continuationToken, null, null);
                     foreach (var blob in _response.Result.Results)
                     {
@@ -84,7 +89,7 @@ namespace FluentBlob.Core
                     }
                 } while (_continuationToken != null);
             };
-            
+
         }
 
 
@@ -130,7 +135,7 @@ namespace FluentBlob.Core
             return container;
         }
 
-       
+
         #endregion
 
     }
