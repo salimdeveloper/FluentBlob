@@ -46,7 +46,7 @@ namespace FluentBlob.Core
             this._fileName = fileName;
             return this;
         }
-        public void FromFile(string filePath)
+        private void FromFile(string filePath)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +58,7 @@ namespace FluentBlob.Core
             blockBlob.UploadFromStream(stream);
         }
 
-        public void ToFile(string filePath)
+        private void ToFile(string filePath)
         {
             throw new NotImplementedException();
         }
