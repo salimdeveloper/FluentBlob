@@ -30,9 +30,7 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer container = GetBlobContainer();
             CloudBlob _blob = container.GetBlobReference(fileName);
-            CloudBlockBlob blob = container.GetBlockBlobReference(fileName);
-            var s = _blob.FetchAttributesAsync();
-            blob.DeleteIfExistsAsync();
+            _blob.DeleteIfExistsAsync();
         }
         public IFileWriteActions Upload(string fileName)
         {
