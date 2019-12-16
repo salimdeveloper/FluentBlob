@@ -153,7 +153,7 @@ namespace FluentBlob.Core
         /// Gets all blob items in a container
         /// </summary>
         /// <returns>IEnumerable<IListBlobItem></returns>
-        public IEnumerable<IListBlobItem> GetAllFiles()
+        public IEnumerable<IListBlobItem> GetAllBlobItems()
         {
             CloudBlobContainer _blobContainer = GetBlobContainer();
             BlobContinuationToken _continuationToken = null;
