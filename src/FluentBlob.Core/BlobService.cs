@@ -29,6 +29,11 @@ namespace FluentBlob.Core
                                   throw new ArgumentNullException(nameof(containerName));
             return this;
         }
+        /// <summary>
+        /// Deletes blobitem in a container.
+        /// </summary>
+        /// <param name="fileName">BlobItem Name</param>
+        /// <returns>Returns true if BlobItem is deleted</returns>
         public bool DeleteBlob(string fileName)
         {
             this._fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
