@@ -17,6 +17,6 @@ namespace FluentBlob.Core
         Task Delete(string fileName);
         IEnumerable<IListBlobItem> GetAllFiles();
         bool DeleteContainer(bool breakLease);
-        void CreateContainer();
+        bool CreateContainer();
     }
 }
