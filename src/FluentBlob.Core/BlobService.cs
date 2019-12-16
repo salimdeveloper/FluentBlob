@@ -181,10 +181,17 @@ namespace FluentBlob.Core
         /// <returns></returns>
         public string GetSharedUri(string fileName, int sharedAccessMinutes)
         {
-            CloudBlobContainer _blobContainer = GetBlobContainer();
-            CloudBlockBlob _cloudBlob = _blobContainer.GetBlockBlobReference(fileName);
-            string _sasBlobToken = GetSharedAccessToken(_cloudBlob, sharedAccessMinutes);
-            return _cloudBlob.Uri + _sasBlobToken;
+            try
+            {
+                CloudBlobContainer _blobContainer = GetBlobContainer();
+                CloudBlockBlob _cloudBlob = _blobContainer.GetBlockBlobReference(fileName);
+                string _sasBlobToken = GetSharedAccessToken(_cloudBlob, sharedAccessMinutes);
+                return _cloudBlob.Uri + _sasBlobToken;
+            }
+            catch(StorageException _exception )
+            {
+                throw _exception;
+            }
         }
 
         #region Helper Methods
