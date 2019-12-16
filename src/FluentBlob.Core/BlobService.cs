@@ -57,7 +57,27 @@ namespace FluentBlob.Core
             CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
             blockBlob.UploadFromStream(stream);
         }
+        /// <summary>
+        /// Deletes a container
+        /// </summary>
+        /// <param name="breakLease">Pass True if you want to break lease of container</param>
+        /// <returns>Returns true of container deleted successfully</returns>
+        public bool DeleteContainer(bool breakLease)
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            if (breakLease)
+            {
+                cloudBlobContainer.BreakLeaseAsync(null);
+            }
+            var _returnValue = cloudBlobContainer.DeleteIfExists();
+            return _returnValue;
+        }
 
+        public void CreateContainer()
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            cloudBlobContainer.CreateIfNotExists();
+        }
         private void ToFile(string filePath)
         {
             throw new NotImplementedException();
@@ -134,6 +154,8 @@ namespace FluentBlob.Core
             var container = _serviceClient.GetContainerReference(this._containerName);
             return container;
         }
+
+
 
 
         #endregion
