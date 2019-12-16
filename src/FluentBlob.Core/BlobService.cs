@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace FluentBlob.Core
 {
@@ -10,12 +12,13 @@ namespace FluentBlob.Core
     /// DATE: 12/10/2019
     /// https://github.com/salimdeveloper
     /// </author>
-    public sealed class BlobService:IBlobActions,IContainerActions
+    public sealed class BlobService : IBlobActions, IContainerActions, IFileReadActions, IFileWriteActions
     {
         private readonly string _connectionString;
         private string _containerName;
+        private string _fileName;
 
-        public BlobService(string connectionString) => 
+        public BlobService(string connectionString) =>
             this._connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
 
         public static IBlobActions Connect(string connectionString) =>
@@ -26,19 +29,71 @@ namespace FluentBlob.Core
                                   throw new ArgumentNullException(nameof(containerName));
             return this;
         }
-        public void Delete(string fileName)
+        public async Task Delete(string fileName)
         {
+            this._fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
             CloudBlobContainer container = GetBlobContainer();
-            CloudBlob _blob = container.GetBlobReference(fileName);
-            _blob.DeleteIfExistsAsync();
+            CloudBlob _blob = container.GetBlobReference(_fileName);
+            await _blob.DeleteIfExistsAsync();
         }
         public IFileWriteActions Upload(string fileName)
         {
-            throw new NotImplementedException();
+            this._fileName = fileName;
+            return this;
         }
         public IFileReadActions Download(string fileName)
         {
+            this._fileName = fileName;
+            return this;
+        }
+        private void FromFile(string filePath)
+        {
             throw new NotImplementedException();
+        }
+
+        public void FromStream(Stream stream)
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
+            blockBlob.UploadFromStream(stream);
+        }
+        /// <summary>
+        /// Deletes a container
+        /// </summary>
+        /// <param name="breakLease">Pass True if you want to break lease of container</param>
+        /// <returns>Returns true of container deleted successfully</returns>
+        public bool DeleteContainer(bool breakLease)
+        {
+            try { 
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            if (breakLease)
+            {
+                cloudBlobContainer.BreakLeaseAsync(null);
+            }
+            var _returnValue = cloudBlobContainer.DeleteIfExists();
+            return _returnValue;
+            }
+            catch(StorageException _storageException)
+            {
+                throw _storageException;
+            }
+        }
+
+        public void CreateContainer()
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            cloudBlobContainer.CreateIfNotExists();
+        }
+        private void ToFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToStream(Stream stream)
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
+            blockBlob.DownloadToStream(stream);
         }
         /// <summary>
         /// Gets all blob items in a container
@@ -48,11 +103,11 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer _blobContainer = GetBlobContainer();
             BlobContinuationToken _continuationToken = null;
-            
+
             {
                 do
                 {
-                    var _response =  _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
+                    var _response = _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
                         , _continuationToken, null, null);
                     foreach (var blob in _response.Result.Results)
                     {
@@ -60,7 +115,7 @@ namespace FluentBlob.Core
                     }
                 } while (_continuationToken != null);
             };
-            
+
         }
 
 
@@ -105,6 +160,10 @@ namespace FluentBlob.Core
             var container = _serviceClient.GetContainerReference(this._containerName);
             return container;
         }
+
+
+
+
         #endregion
 
     }
