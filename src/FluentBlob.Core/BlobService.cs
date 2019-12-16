@@ -97,11 +97,24 @@ namespace FluentBlob.Core
                 throw _storageException;
             }
         }
-
-        public void CreateContainer()
+        /// <summary>
+        /// Creates a new container in storage account.
+        /// </summary>
+        /// <returns>returns true if container is created.</returns>
+        public bool CreateContainer()
         {
             CloudBlobContainer cloudBlobContainer = GetBlobContainer();
-            cloudBlobContainer.CreateIfNotExists();
+            try
+            {
+               return cloudBlobContainer.CreateIfNotExists();
+            }
+            catch (StorageException _exception)
+            {
+
+                throw _exception;
+            }
+           
+           
         }
         private void ToFile(string filePath)
         {
