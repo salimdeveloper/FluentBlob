@@ -14,7 +14,7 @@ namespace FluentBlob.Core
         IFileReadActions Download(string fileName);
         IFileWriteActions Upload(string fileName);
         string GetSharedUri(string fileName, int sharedAccessMinutes);
-        Task Delete(string fileName);
+        bool DeleteBlob(string fileName);
         void DeleteAllBlobs();
         IEnumerable<IListBlobItem> GetAllBlobItems();
         bool DeleteContainer(bool breakLease);

@@ -29,12 +29,19 @@ namespace FluentBlob.Core
                                   throw new ArgumentNullException(nameof(containerName));
             return this;
         }
-        public async Task Delete(string fileName)
+        public bool DeleteBlob(string fileName)
         {
             this._fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
-            CloudBlobContainer container = GetBlobContainer();
-            CloudBlob _blob = container.GetBlobReference(_fileName);
-            await _blob.DeleteIfExistsAsync();
+            try
+            {
+                CloudBlobContainer container = GetBlobContainer();
+                CloudBlob _blob = container.GetBlobReference(_fileName);
+                return _blob.DeleteIfExists();
+            }
+            catch(StorageException _exception )
+            {
+                throw _exception;
+            }
         }
         /// <summary>
         /// Delete all blob items in a container.
