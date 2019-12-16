@@ -64,6 +64,7 @@ namespace FluentBlob.Core
         /// <returns>Returns true of container deleted successfully</returns>
         public bool DeleteContainer(bool breakLease)
         {
+            try { 
             CloudBlobContainer cloudBlobContainer = GetBlobContainer();
             if (breakLease)
             {
@@ -71,6 +72,11 @@ namespace FluentBlob.Core
             }
             var _returnValue = cloudBlobContainer.DeleteIfExists();
             return _returnValue;
+            }
+            catch(StorageException _storageException)
+            {
+                throw _storageException;
+            }
         }
 
         public void CreateContainer()
