@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.Storage.Blob;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace FluentBlob.Core
     public interface IBlobActions
     {
         IContainerActions Container(string containerName);
-       // IContainerActions SetContainer(string containerName);
+        IEnumerable<CloudBlobContainer> GetAllContainers();
+        
     }
 }
