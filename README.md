@@ -5,4 +5,8 @@
 * Get Uri link with Shared Access Token
 * Delete Blob Item From Container.
 * List All Blob Item In Container.
+* Add Blob Item To Container.
+* Create A Container.
+* Delete A Contaiiner.
+
                     
