@@ -36,6 +36,28 @@ namespace FluentBlob.Core
             CloudBlob _blob = container.GetBlobReference(_fileName);
             await _blob.DeleteIfExistsAsync();
         }
+        /// <summary>
+        /// Delete all blob items in a container.
+        /// </summary>
+        public void DeleteAllBlobs()
+        {
+            BlobContinuationToken _continuationToken = null;
+            try
+            {
+                CloudBlobContainer _blobContainer = GetBlobContainer();
+                var _res = _blobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, new int?()
+                            , _continuationToken, null, null);
+                foreach (var blobItem in _res.Result.Results)
+                {
+                    CloudBlob _blobClient = _blobContainer.GetBlobReference(blobItem.Uri.ToString());
+                    _blobClient.DeleteIfExists();
+                }
+            }
+            catch(StorageException _exception)
+            {
+                throw _exception;
+            }
+        }
         public IFileWriteActions Upload(string fileName)
         {
             this._fileName = fileName;
