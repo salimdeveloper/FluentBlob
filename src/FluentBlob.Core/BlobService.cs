@@ -58,6 +58,25 @@ namespace FluentBlob.Core
             blockBlob.UploadFromStream(stream);
         }
         /// <summary>
+        /// Gets all containers in a storage account.
+        /// </summary>
+        /// <returns>Returns IEnumerable collection of CloudBlobContainer</returns>
+        public IEnumerable<CloudBlobContainer> GetAllContainers()
+        {
+            BlobContinuationToken continuationToken = null;
+            try
+            {
+                var _cloudBlobClient = GetCloudBlobClient();
+                return _cloudBlobClient.ListContainersSegmentedAsync(continuationToken).Result.Results;
+               
+            }
+            catch (StorageException _exxception)
+            {
+
+                throw _exxception;
+            }
+        }
+        /// <summary>
         /// Deletes a container
         /// </summary>
         /// <param name="breakLease">Pass True if you want to break lease of container</param>
@@ -159,6 +178,10 @@ namespace FluentBlob.Core
             CloudBlobClient _serviceClient = CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
             var container = _serviceClient.GetContainerReference(this._containerName);
             return container;
+        }
+        private CloudBlobClient GetCloudBlobClient()
+        {
+            return CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
         }
 
 
