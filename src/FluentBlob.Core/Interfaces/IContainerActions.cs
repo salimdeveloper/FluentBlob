@@ -11,8 +11,8 @@ namespace FluentBlob.Core
     /// </author>
     public interface IContainerActions
     {
-        IFileReadActions Download(string fileName);
-        IFileWriteActions Upload(string fileName);
+        IFileReadActions DownloadBlob(string fileName);
+        IFileWriteActions UploadBlob(string fileName);
         string GetSharedUri(string fileName, int sharedAccessMinutes);
         bool DeleteBlob(string fileName);
         void DeleteAllBlobs();

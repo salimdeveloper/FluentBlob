@@ -70,12 +70,22 @@ namespace FluentBlob.Core
                 throw _exception;
             }
         }
-        public IFileWriteActions Upload(string fileName)
+        /// <summary>
+        /// Sets the blob item to upload.
+        /// </summary>
+        /// <param name="fileName">Name of the blob item.</param>
+        /// <returns></returns>
+        public IFileWriteActions UploadBlob(string fileName)
         {
             this._fileName = fileName;
             return this;
         }
-        public IFileReadActions Download(string fileName)
+        /// <summary>
+        /// Sets the blob iitem to download
+        /// </summary>
+        /// <param name="fileName">Name of the blob item.</param>
+        /// <returns></returns>
+        public IFileReadActions DownloadBlob(string fileName)
         {
             this._fileName = fileName;
             return this;
