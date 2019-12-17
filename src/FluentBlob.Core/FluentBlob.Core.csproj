@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Salim Alam</Authors>
+    <Company>AlamWorks Consultation</Company>
+    <Product>FluentBlob</Product>
+    <PackageId>FluentBlob</PackageId>
+    <Description>FluentBlob is an API  that provides a simple fluent interface to access features of Microsoft Azure Storage Blob services.</Description>
+    <Copyright>(c) AlamWorks Consultation</Copyright>
+    <RepositoryType>Git</RepositoryType>
+    <RepositoryUrl>https://github.com/salimdeveloper/FluentBlob/</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
