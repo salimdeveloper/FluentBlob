@@ -43,7 +43,7 @@ namespace FluentBlob.Core
                 CloudBlob _blob = container.GetBlobReference(_fileName);
                 return _blob.DeleteIfExists();
             }
-            catch(StorageException _exception )
+            catch (StorageException _exception)
             {
                 throw _exception;
             }
@@ -65,7 +65,7 @@ namespace FluentBlob.Core
                     _blobClient.DeleteIfExists();
                 }
             }
-            catch(StorageException _exception)
+            catch (StorageException _exception)
             {
                 throw _exception;
             }
@@ -102,7 +102,7 @@ namespace FluentBlob.Core
             {
                 var _cloudBlobClient = GetCloudBlobClient();
                 return _cloudBlobClient.ListContainersSegmentedAsync(continuationToken).Result.Results;
-               
+
             }
             catch (StorageException _exxception)
             {
@@ -117,16 +117,17 @@ namespace FluentBlob.Core
         /// <returns>Returns true of container deleted successfully</returns>
         public bool DeleteContainer(bool breakLease)
         {
-            try { 
-            CloudBlobContainer cloudBlobContainer = GetBlobContainer();
-            if (breakLease)
+            try
             {
-                cloudBlobContainer.BreakLeaseAsync(null);
+                CloudBlobContainer cloudBlobContainer = GetBlobContainer();
+                if (breakLease)
+                {
+                    cloudBlobContainer.BreakLeaseAsync(null);
+                }
+                var _returnValue = cloudBlobContainer.DeleteIfExists();
+                return _returnValue;
             }
-            var _returnValue = cloudBlobContainer.DeleteIfExists();
-            return _returnValue;
-            }
-            catch(StorageException _storageException)
+            catch (StorageException _storageException)
             {
                 throw _storageException;
             }
@@ -140,15 +141,12 @@ namespace FluentBlob.Core
             CloudBlobContainer cloudBlobContainer = GetBlobContainer();
             try
             {
-               return cloudBlobContainer.CreateIfNotExists();
+                return cloudBlobContainer.CreateIfNotExists();
             }
             catch (StorageException _exception)
             {
-
                 throw _exception;
             }
-           
-           
         }
         private void ToFile(string filePath)
         {
@@ -200,7 +198,7 @@ namespace FluentBlob.Core
                 string _sasBlobToken = GetSharedAccessToken(_cloudBlob, sharedAccessMinutes);
                 return _cloudBlob.Uri + _sasBlobToken;
             }
-            catch(StorageException _exception )
+            catch (StorageException _exception)
             {
                 throw _exception;
             }
@@ -215,13 +213,20 @@ namespace FluentBlob.Core
         /// <returns>Blob Token</returns>
         private static string GetSharedAccessToken(CloudBlockBlob blob, int sharedAccessMinutes)
         {
-            var sasConstraints = new SharedAccessBlobPolicy();
-            sasConstraints.SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-1);
-            sasConstraints.SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(sharedAccessMinutes);
-            sasConstraints.Permissions = SharedAccessBlobPermissions.Read;
+            try
+            {
+                var sasConstraints = new SharedAccessBlobPolicy();
+                sasConstraints.SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-1);
+                sasConstraints.SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(sharedAccessMinutes);
+                sasConstraints.Permissions = SharedAccessBlobPermissions.Read;
 
-            var sasBlobToken = blob.GetSharedAccessSignature(sasConstraints);
-            return sasBlobToken;
+                var sasBlobToken = blob.GetSharedAccessSignature(sasConstraints);
+                return sasBlobToken;
+            }
+            catch (StorageException _exception)
+            {
+                throw _exception;
+            }
         }
         /// <summary>
         /// Gets Initialized Blob Container
@@ -229,13 +234,28 @@ namespace FluentBlob.Core
         /// <returns>CloudBlobContainer</returns>
         private CloudBlobContainer GetBlobContainer()
         {
-            CloudBlobClient _serviceClient = CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
-            var container = _serviceClient.GetContainerReference(this._containerName);
-            return container;
+            try
+            {
+                CloudBlobClient _serviceClient = CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
+                var container = _serviceClient.GetContainerReference(this._containerName);
+                return container;
+            }
+            catch(StorageException _exception)
+            {
+                throw _exception;
+            }
         }
         private CloudBlobClient GetCloudBlobClient()
         {
-            return CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
+            try
+            {
+                return CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
+            }
+            catch(StorageException _exception)
+            {
+                throw _exception;
+            }
+            
         }
 
 
