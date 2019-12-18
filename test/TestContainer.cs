@@ -5,7 +5,7 @@ using FluentBlob.Core;
 using Microsoft.Azure.Storage.Blob;
 using System.Linq;
 
-namespace test
+namespace FluentBlob.Test
 {
     public class TestContainer : IClassFixture<BlobStorageFixture>
     {

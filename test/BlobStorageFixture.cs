@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace test
+namespace FluentBlob.Test
 {
     public class BlobStorageFixture : IDisposable
     {
