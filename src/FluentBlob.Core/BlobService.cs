@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace FluentBlob.Core
 {
@@ -205,6 +204,10 @@ namespace FluentBlob.Core
             {
                 CloudBlobContainer _blobContainer = GetBlobContainer();
                 CloudBlockBlob _cloudBlob = _blobContainer.GetBlockBlobReference(fileName);
+                if (!_cloudBlob.Exists())
+                {
+                    throw new BlobNotFoundException();
+                }
                 string _sasBlobToken = GetSharedAccessToken(_cloudBlob, sharedAccessMinutes);
                 return _cloudBlob.Uri + _sasBlobToken;
             }
@@ -250,7 +253,7 @@ namespace FluentBlob.Core
                 var container = _serviceClient.GetContainerReference(this._containerName);
                 return container;
             }
-            catch(StorageException _exception)
+            catch (StorageException _exception)
             {
                 throw _exception;
             }
@@ -261,11 +264,11 @@ namespace FluentBlob.Core
             {
                 return CloudStorageAccount.Parse(this._connectionString).CreateCloudBlobClient();
             }
-            catch(StorageException _exception)
+            catch (StorageException _exception)
             {
                 throw _exception;
             }
-            
+
         }
 
 
