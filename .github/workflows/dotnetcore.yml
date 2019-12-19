@@ -17,7 +17,7 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      working-directory: ./src
+      working-directory: ./src/FluentBlob.Core
       run: dotnet build --configuration Release
     - uses: actions/checkout@v1
     - name: Pack nuget Package
