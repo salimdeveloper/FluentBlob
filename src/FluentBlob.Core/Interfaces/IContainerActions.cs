@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Storage.Blob;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FluentBlob.Core
 {
