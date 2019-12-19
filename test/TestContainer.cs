@@ -44,6 +44,7 @@ namespace FluentBlob.Test
         [Fact]
         public void GetAllContainers_ForAllContainers_ReturnsCount()
         {
+            this._fixture.ClearStorage();
             string _containerName = "container";
             int _noofContainers = 5;
             for (int i = 0; i < _noofContainers; i++)
