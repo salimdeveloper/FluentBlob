@@ -28,6 +28,7 @@ namespace FluentBlob.Test
         {
             StartAndWaitForExit("stop");
         }
+        public void ClearStorage() { StartAndWaitForExit("clear all"); }
         void StartAndWaitForExit(string arguments)
         {
             _process.StartInfo.Arguments = arguments;
