@@ -1,7 +1,5 @@
 ﻿using Microsoft.Azure.Storage.Blob;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FluentBlob.Core
 {
@@ -14,6 +12,6 @@ namespace FluentBlob.Core
     {
         IContainerActions Container(string containerName);
         IEnumerable<CloudBlobContainer> GetAllContainers();
-        
+
     }
 }
