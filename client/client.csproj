@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\FluentBlob.Core\FluentBlob.Core.csproj" />
+  </ItemGroup>
+
 </Project>
