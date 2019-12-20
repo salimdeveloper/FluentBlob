@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-
+    name: builds
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +19,11 @@ jobs:
     - name: Build with dotnet
       working-directory: ./
       run: dotnet build --configuration Release
-deploy:
-  needs: build
-  runs-on: ubuntu-latest
-  steps:
+  deploys:
+    name: deploying
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v1
     - name: Pack nuget Package
       run: dotnet pack --configuration Release
