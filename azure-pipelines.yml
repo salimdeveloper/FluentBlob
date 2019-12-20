@@ -19,4 +19,5 @@ steps:
   
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet nuget push *.nupkg -k oy2gyts2a7bllzbvpfcacy5bksh4c22effktzdpow527yq
  
