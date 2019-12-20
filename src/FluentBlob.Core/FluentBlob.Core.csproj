@@ -11,6 +11,8 @@
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/salimdeveloper/FluentBlob/</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
