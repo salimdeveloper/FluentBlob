@@ -32,7 +32,26 @@ __To create a new container :__
        Console.WriteLine(message);
   }
  ```
-**Current Features :**
+ __To delete a container :__
+ ```csharp
+  Console.WriteLine("Deleting container ..");
+  var _result = false;
+  try
+  {
+      _result = BlobService.Connect("UseDevelopmentStorage=true;").Container("newcontainer2").DeleteContainer(false);
+  }
+  catch (Exception ex)
+  {
+       Console.WriteLine("Exception thrown: " + ex.ToString());
+  }
+  finally
+  {
+       string message;
+       message = _result ? "Container sucessfully deleted!" : "Failed to delete container";
+       Console.WriteLine(message);
+  }
+```
+  **Current Features :**
 
 * Get Uri link with Shared Access Token.
 * Delete Blob Item From Container.
