@@ -3,7 +3,7 @@ __FluentBlob is an API that provides a simple fluent interface to access feature
 
 To install, use the Nuget "FluentBlob":
 ```
-Install-Package FluentBlob -Version 1.0.0
+PM> Install-Package FluentBlob -Version 1.0.0
 ```
 **Current Features :**
 
