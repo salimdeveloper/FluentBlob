@@ -51,7 +51,23 @@ __To create a new container :__
        Console.WriteLine(message);
   }
 ```
-  **Current Features :**
+__List all containers in storage account :__
+```csharp
+Console.WriteLine("Retrieving all containers...");
+try
+{
+   var _containerslist = BlobService.Connect("UseDevelopmentStorage=true;").GetAllContainers();
+   foreach (var container in _containerslist)
+   {
+       Console.WriteLine(container.Name);
+   }
+}
+catch(Exception ex)
+{
+   Console.WriteLine("Exxception thrown: "+ex.ToString());
+}
+```
+**Current Features :**
 
 * Get Uri link with Shared Access Token.
 * Delete Blob Item From Container.
