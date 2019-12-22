@@ -5,7 +5,7 @@ To install, use the Nuget "FluentBlob":
 ```
 PM> Install-Package FluentBlob -Version 1.0.0
 ```
-To create a new container
+__*To create a new container :__
 ```csharp
 // Use the following connection string for Storage Account Emulator.
 // String storageConnectionString ="UseDevelopmentStorage=true;"
