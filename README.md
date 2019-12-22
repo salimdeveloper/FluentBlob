@@ -5,6 +5,34 @@ To install, use the Nuget "FluentBlob":
 ```
 PM> Install-Package FluentBlob -Version 1.0.0
 ```
+To create a new container
+```csharp
+ // Use the following connection string for Storage Account Emulator.
+            // String storageConnectionString ="UseDevelopmentStorage=true;"
+
+            //Use the following connection string for Live Storage Account.
+            string storageConnectionString = "DefaultEndpointsProtocol=https;"
+               + "AccountName=dpdevblobs"
+               + ";AccountKey=y6JPlKpuDqNg/V46LE1P+IEjqO9OpqOWJCFgJ5dE1tW6eTYN+0fZst3n0WYGgmGFEAvTa6yLrBlGepKjE67mqg=="
+               + ";EndpointSuffix=core.windows.net";
+
+            Console.WriteLine("Creating a new container ..");
+            var _result = false;
+            try
+            {
+                _result = BlobService.Connect(storageConnectionString).Container("newcontainer3").CreateContainer();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception thrown: " + ex.ToString());
+            }
+            finally
+            {
+                string message;
+                message = _result ? "Container sucessfully created!" : "Failed to create container";
+                Console.WriteLine(message);
+            }
+ ```
 **Current Features :**
 
 * Get Uri link with Shared Access Token.
