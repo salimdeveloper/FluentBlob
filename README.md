@@ -1,4 +1,4 @@
-# FluentBlob
+# FluentBlob [![NuGet Badge](https://buildstats.info/nuget/FluentBlob)](https://www.nuget.org/packages/FluentBlob/)
 __FluentBlob is an API that provides a simple fluent interface to access features of Microsoft Azure Storage Blob services.__
 
 **Current Features :**
