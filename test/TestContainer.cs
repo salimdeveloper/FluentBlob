@@ -30,6 +30,7 @@ namespace FluentBlob.Test
             //Clean up
             Client().GetContainerReference(_containerName).DeleteIfExists();
         }
+        //need test for false condition.
         [Fact]
         public void DeleteContainer_ForContainerDeleted_ReturnsTrue()
         {
