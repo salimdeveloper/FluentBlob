@@ -141,5 +141,25 @@ __List all blob items in a container :__
      Console.WriteLine("Exception thrown: " + ex.ToString());
  }
 ```
+__Get shared access Url of the blob :__
+  ```
+  Shared access url of a blob enables to open in browser
+  ```
+```charp
+Console.WriteLine("getting The Shared Access Url...");
+try
+{
+    string _blobName = "test.png";
+    string _containerName = "newcontainer";
+    int _minute_The_Url_be_Live = 10; //The shared access will be live for 10 minutes.
+    var _sharedAccessUri = BlobService.Connect("UseDevelopmentStorage=true;").Container(_containerName)
+                           .GetSharedUri(_blobName, _minute_The_Url_be_Live);
+    Console.WriteLine("The Uri With Shared Access for" + _blobName + "is :" + _sharedAccessUri);
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Exception has occured :" + ex.ToString());
+}
+```
 
                     
