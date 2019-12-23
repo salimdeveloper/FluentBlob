@@ -124,5 +124,22 @@ finally
     Console.WriteLine(message);
 }
 ```
+__List all blob items in a container :__
+```csharp
+ Console.WriteLine("Getting all blobs from container...");
+ try
+ {
+ var _blobitems = BlobService.Connect("UseDevelopmentStorage=true;").Container("newcontainer").GetAllBlobItems();
+    foreach (var blob in _blobitems)
+    {
+        Console.WriteLine(blob.Uri+"\n");
+    }
+ }
+  catch (Exception ex)
+ {
+
+     Console.WriteLine("Exception thrown: " + ex.ToString());
+ }
+```
 
                     
