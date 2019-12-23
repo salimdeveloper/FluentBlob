@@ -15,7 +15,6 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
-    - name: bash command
-      run: cd /home/runner/work/FluentBlob/FluentBlob/src/FluentBlob.Core/bin/Release/
-    - name: bash list
-      run: ls
+    - name: Push package
+      run: dotnet nuget push "bin/Release/*.nupkg" -k oy2islq3yqpgokagdcfqltvvolvm5l4e5mrxnuper7e2aa -Source https://api.nuget.org/v3/index.json 
+ 
