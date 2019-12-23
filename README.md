@@ -103,13 +103,26 @@ catch(Exception ex)
     Console.WriteLine("File download failed :"+ex.ToString());
 }
 ```
-**Current Features :**
-
-* Get Uri link with Shared Access Token.
-* Delete Blob Item From Container.
-* List All Blob Item In Container.
-* Add Blob Item To Container.
-* Create A Container.
-* Delete A Contaiiner.
+__Delete blob from container :__
+```csharp
+string _containerName = "newcontainer";
+string _blobName = "test" + ".png";
+Console.WriteLine("Deleting blob ..");
+var _result = false;
+try
+{
+    _result= BlobService.Connect("UseDevelopmentStorage=true;").Container(_containerName).DeleteBlob(_blobName);
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Exception thrown: " + ex.ToString());
+}
+finally
+{
+    string message;
+    message = _result ? "Blob deleted successfuly!" : "Blob deletion failed";
+    Console.WriteLine(message);
+}
+```
 
                     
