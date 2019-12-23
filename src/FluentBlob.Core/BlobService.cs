@@ -98,7 +98,7 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer cloudBlobContainer = GetBlobContainer();
             CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
-            blockBlob.UploadFromStream(stream);
+            blockBlob.UploadFromStreamAsync(stream);
         }
         /// <summary>
         /// Gets all containers in a storage account.
@@ -166,7 +166,7 @@ namespace FluentBlob.Core
         {
             CloudBlobContainer cloudBlobContainer = GetBlobContainer();
             CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(this._fileName);
-            blockBlob.DownloadToStream(stream);
+            blockBlob.DownloadToStreamAsync(stream).Wait();
         }
         /// <summary>
         /// Gets all blob items in a container
