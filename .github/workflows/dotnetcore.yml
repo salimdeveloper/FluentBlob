@@ -1,0 +1,20 @@
+name: Buildandpush
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Push package
+      run: dotnet nuget push "/home/runner/work/FluentBlob/FluentBlob/src/FluentBlob.Core/bin/Release/*.nupkg" -k oy2islq3yqpgokagdcfqltvvolvm5l4e5mrxnuper7e2aa -s https://api.nuget.org/v3/index.json 
+ 
