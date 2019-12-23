@@ -16,5 +16,5 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Push package
-      run: dotnet nuget push "bin/Release/*.nupkg" -k oy2islq3yqpgokagdcfqltvvolvm5l4e5mrxnuper7e2aa -s https://api.nuget.org/v3/index.json 
+      run: dotnet nuget push "/home/runner/work/FluentBlob/FluentBlob/src/FluentBlob.Core/bin/Release/*.nupkg" -k oy2islq3yqpgokagdcfqltvvolvm5l4e5mrxnuper7e2aa -s https://api.nuget.org/v3/index.json 
  
