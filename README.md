@@ -64,7 +64,23 @@ try
 }
 catch(Exception ex)
 {
-   Console.WriteLine("Exxception thrown: "+ex.ToString());
+   Console.WriteLine("Exception thrown: "+ex.ToString());
+}
+```
+__Upload blob to container :__
+```csharp
+Console.WriteLine("uploading blob....");
+try
+{
+    using (Stream file = File.OpenRead(@"C:\Users\DpDev\Pictures\test.png"))
+    {
+                        BlobService.Connect("UseDevelopmentStorage=true;").Container("newcontainer").UploadBlob("test.png").FromStream(file);
+    }
+    Console.WriteLine("file uploded successfully");
+}
+catch(Exception ex)
+{
+    Console.WriteLine("file upload failed with exception :" +ex.ToString());
 }
 ```
 **Current Features :**
