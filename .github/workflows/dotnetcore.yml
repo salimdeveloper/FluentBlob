@@ -15,5 +15,7 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
-    - name: Pack Nuget
-      run: dotnet pack --output nupkgs
+    - name: bash command
+      run: cd /home/runner/work/FluentBlob/FluentBlob/src/FluentBlob.Core/bin/Release/
+    - name: bash list
+      run: ls
