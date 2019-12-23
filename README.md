@@ -11,8 +11,8 @@ __To create a new container :__
 // String storageConnectionString ="UseDevelopmentStorage=true;"
 //Use the following connection string for Live Storage Account.
   string storageConnectionString = "DefaultEndpointsProtocol=https;"
-                                   + "AccountName=dpdevblobs"
-               + ";AccountKey=y6JPlKpuDqNg/V46LE1P+IEjqO9OpqOWJCFgJ5dE1tW6eTYN+0fZst3n0WYGgmGFEAvTa6yLrBlGepKjE67mqg=="
+                                   + "AccountName=yourblobs"
+               + ";AccountKey=y6JPlKg/V46LE1P+IEjqO9Opq+0WYGgmGFEAvTa6yLrBlGepKjE67mqg=="
                + ";EndpointSuffix=core.windows.net";
 
   Console.WriteLine("Creating a new container ..");
