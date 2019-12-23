@@ -83,6 +83,26 @@ catch(Exception ex)
     Console.WriteLine("file upload failed with exception :" +ex.ToString());
 }
 ```
+__Download blob from container :__
+```csharp
+string _blobName = "test"+ ".png"; 
+var container = "newcontainer";
+//Prepare File
+string _localPath = "./";
+
+string _localFilePath = Path.Combine(_localPath, _blobName);
+Console.WriteLine("Downloading Blob....");
+try
+{
+    using FileStream _filestream = File.OpenWrite(_localFilePath);
+                  BlobService.Connect("UseDevelopmentStorage=true;").Container(container).DownloadBlob(_blobName).ToStream(_filestream);
+    Console.WriteLine("Blob Downloaded successfuly.");
+}
+catch(Exception ex)
+{
+    Console.WriteLine("File download failed :"+ex.ToString());
+}
+```
 **Current Features :**
 
 * Get Uri link with Shared Access Token.
